@@ -29,30 +29,28 @@ public class PlayerWeapon : MonoBehaviour
     {
         if (!_canFire) return;
         
-        IDamageable damageable = GetDamageable();
-        
-        if (damageable == null) return;
+        if (!TryGetDamageable(out IDamageable damageable)) return;
         
         damageable.TakeDamage(_damage);
-        Debug.Log($"Player: {damageable.GameObject.name}에게 발사");
-        
         _currentCooldown = 0f;
+        Debug.Log($"Player: {damageable.GameObject.name}에게 발사");
     }
     
 
-    private IDamageable GetDamageable()
+    private bool TryGetDamageable(out IDamageable damageable)
     {
+        bool result = false;
+        damageable = null;
+        
         Ray ray = new Ray(_cameraTransform.position, _cameraTransform.forward);
         RaycastHit hit;
-
-        IDamageable damageable = null;
         
         if (Physics.Raycast(ray, out hit, _range))
         {
-            damageable = hit.transform.GetComponent<IDamageable>();
+            result = hit.transform.TryGetComponent(out damageable);
         }
 
-        return damageable;
+        return result;
     }
 
     private void CacheComponents()
@@ -62,7 +60,7 @@ public class PlayerWeapon : MonoBehaviour
 
     private void UpdateCooldown()
     {
-        if (_isPressedFire)  return;
+        if (_isReadyFire)  return;
         _currentCooldown += Time.deltaTime;
     }
 

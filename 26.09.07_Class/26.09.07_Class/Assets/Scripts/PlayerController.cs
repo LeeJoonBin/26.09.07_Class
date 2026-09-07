@@ -5,14 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform _cameraPivot;
-    [SerializeField] private PlayerWeapon _weapon;
     
+    private PlayerWeapon _weapon;
     private PlayerMovement _movement;
     private Transform _cameraTransform;
     
     // ------------------------------------
     private void Awake() => CacheComponents();
-
     private void Start() => LockCursor();
     private void FixedUpdate() => _movement.Move();
 
