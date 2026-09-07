@@ -1,0 +1,43 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BulletController : MonoBehaviour
+{
+    private float _damage;
+    private float _speed;
+
+    // 어딘가에 부딪히면
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.gameObject.name);
+        if (other.CompareTag("Player"))
+        {
+            // 데미지 추가
+            Debug.Log("플레이어 맞음");
+        }
+        Destroy(gameObject);
+    }
+        
+        // 벽인 경우 파괴
+        
+    private void Update() => MoveForward();
+    
+    // 앞으로 전진
+    private void MoveForward()
+    {
+        transform.Translate(Vector3.forward * _speed * Time.deltaTime);
+    }
+    
+    // 터렛으로부터 데이터 전달 받기.
+    public void SetData(int damage, float speed, float destoryDelay)
+    {
+        _damage = damage;
+        _speed = speed;
+        
+        // 스폰 기준으로 제한시간 이후 파괴
+        Destroy(gameObject, destoryDelay);
+    }
+
+}
