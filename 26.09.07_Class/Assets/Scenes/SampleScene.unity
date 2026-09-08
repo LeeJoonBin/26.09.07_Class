@@ -252,6 +252,10 @@ PrefabInstance:
       propertyPath: _flameEffect
       value: 
       objectReference: {fileID: 7739478055208513647, guid: d4adf16a7c1587947a878d77efd07277, type: 3}
+    - target: {fileID: 1963758940374426105, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
+      propertyPath: _grenadeDestoyTime
+      value: 1.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2622542715564985985, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
       propertyPath: m_Name
       value: Player

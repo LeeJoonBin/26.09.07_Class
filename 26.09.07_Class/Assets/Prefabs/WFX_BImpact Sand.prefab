@@ -9506,7 +9506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deactivateDelay: 1
-  _isDestroy: 1
+  _isDestroy: 0
   _platInStart: 0
 --- !u!1 &7454410517848610308
 GameObject:
