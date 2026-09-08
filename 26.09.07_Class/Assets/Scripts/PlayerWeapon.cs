@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    
     private Transform _cameraTransform;
 
     [SerializeField] private KeyCode _fireKey = KeyCode.Mouse0;
@@ -14,6 +13,8 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private int _damage;
     [SerializeField] private float _cooldown;
     [SerializeField] private int _maxMagazineCount;
+    
+    
     //-----------
     private int _currentMagazineCount;
     private bool _isPressReload => Input.GetKey(_reloadKey);
@@ -45,21 +46,15 @@ public class PlayerWeapon : MonoBehaviour
     public void Fire()
     {
         if (!_canFire) return;
-        
-        if (!TryGetDamageable(out IDamageable damageable)) return;
-        
-        damageable.TakeDamage(_damage);
         _currentCooldown = 0f;
         _currentMagazineCount--;
+        if (!TryGetDamageable(out IDamageable damageable)) return;
+        damageable.TakeDamage(_damage);
         Debug.Log($"Player: {damageable.GameObject.name}에게 발사");
         Debug.Log($"{_currentMagazineCount}");
     }
 
-
-    private void spawnBullet()
-    {
-        
-    }
+    
     private bool TryGetDamageable(out IDamageable damageable)
     {
         bool result = false;
