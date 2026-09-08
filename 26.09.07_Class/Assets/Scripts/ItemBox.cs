@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class ItemBox : MonoBehaviour, IInteractable
 {
-	
+
     public GameObject GameObject
     {
-        get => gameObject; 
+        get => gameObject;
     }
-	private void Outline _outline;
+
+    private void Outline _outline;
 
     private void Awake() => CacheComponents();
     private void Start() => Init();

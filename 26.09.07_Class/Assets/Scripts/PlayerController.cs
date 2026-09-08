@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IInteractor
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform _cameraPivot;
     [SerializeField] private float _detectionRange;
@@ -13,10 +13,10 @@ public class PlayerController : MonoBehaviour, IInteractor
     private PlayerMovement _movement;
     private Transform _cameraTransform;
     
-    private IInteractable _targetnteractable;
-    private bool _hasDetectInteractable => _targetnteractable != null;
+    /*private II _targetnteractable;*/
+    /*private bool _hasDetectInteractable => _targetnteractable != null;*/
     private bool _isPressedInteractionKey => Input.GetKeyDown(_interactionKey);
-    private bool _canInteraction => _hasDetectInteractable && _isPressedInteractionKey;
+    /*private bool _canInteraction => _hasDetectInteractable && _isPressedInteractionKey;*/
     
     public GameObject GameObject {get => gameObject;}
     // ------------------------------------
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour, IInteractor
         _weapon.Fire();
         _weapon.Reload();
         DetectInteractable();
-        TryInteract();
+        /*TryInteract();*/
     }
 
     private void LateUpdate()
@@ -77,24 +77,24 @@ public class PlayerController : MonoBehaviour, IInteractor
             
             return;
         }
-        if (_hasDetectInteractable)
+        /*if (_hasDetectInteractable)
         {
             if (hit.collider.gameObject == _targetnteractable.GameObject)
             {
                 return;
             }
             
-        }
+        }*/
         
-        _targetnteractable = hit.collider.GetComponent<IInteractable>();
+        /*_targetnteractable = hit.collider.GetComponent<IInteractable>();*/
         
-        if(_hasDetectInteractable) Debug.Log($"{_targetnteractable.GameObject.name} 감지");
+        /*if(_hasDetectInteractable) Debug.Log($"{_targetnteractable.GameObject.name} 감지");*/
     }
-    public void TryInteract()
+    /*public void TryInteract()
     {
         if(!_canInteraction) return;
 
         _targetnteractable.Interact(this);
         _targetnteractable = null;
-    }
+    }*/
 }
