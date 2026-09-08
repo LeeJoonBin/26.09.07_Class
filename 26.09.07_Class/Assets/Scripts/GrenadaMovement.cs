@@ -14,7 +14,7 @@ public class GrenadaMovement : MonoBehaviour
         transform.Translate(Vector3.forward * _grenadeSpeed * Time.deltaTime);
     }
 
-    public void SetData( float grenadeSpeed,  float grenadeDestoryDelay)
+    public void SetData( float grenadeSpeed,  float grenadeDestoryDelay, FlameEffect flameEffect)
     {
         _grenadeSpeed = grenadeSpeed;
         

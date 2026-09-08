@@ -12,6 +12,7 @@ public class GrenadeController : MonoBehaviour
     [SerializeField]private float _grenadeSpeed;
     [SerializeField]private float _grenadeDestoyTime;
     [SerializeField] private int _maxGrenade;
+    [SerializeField] private FlameEffect _flameEffect;
 
     private float _countKeydown;
     private float _plusSpeed;
@@ -47,10 +48,17 @@ public class GrenadeController : MonoBehaviour
         }
     }
 
+    private void GrenadeFlameEffect()
+    {
+        _flameEffect.gameObject.SetActive(true);
+        _flameEffect.Play();
+    }
+
     private void spawnGrenade()
     {
-        
+        GrenadeFlameEffect();
         GrenadaMovement grenade = Instantiate(_grenadePrefab,_muzzlePoint.position, _muzzlePoint.rotation);
-        grenade.SetData( _grenadeSpeed , _grenadeDestoyTime);
+        grenade.SetData( _grenadeSpeed , _grenadeDestoyTime, _flameEffect);
+        
     }
 }
