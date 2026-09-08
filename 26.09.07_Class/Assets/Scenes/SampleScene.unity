@@ -122,29 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &31198844 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2622542715564985985, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
-  m_PrefabInstance: {fileID: 621552669}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &31198850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31198844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d469ea67f04c84849978f969c46fbf21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _throwKey: 51
-  _grenadePrefab: {fileID: 8682823756083285682, guid: d7d5e78be6f6edc4cb06f8404877011f, type: 3}
-  _maxKeydown: 3
-  _muzzlePoint: {fileID: 2113912844}
-  _grenadeSpeed: 5
-  _grenadeDestoyTime: 3
 --- !u!1001 &279003516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -267,25 +244,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1963758940374426105, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
+      propertyPath: _maxGrenade
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2622542715564985985, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3030240824574338575, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
-      propertyPath: _detectionRange
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6898027869763284471, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
-      propertyPath: _isDestroy
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6898027869763284471, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
-      propertyPath: _platInStart
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7509428194015608911, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
-      propertyPath: m_Mass
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7909435288864592412, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
       propertyPath: m_LocalPosition.x
@@ -330,10 +295,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2622542715564985985, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 31198850}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
 --- !u!1 &705507993
 GameObject:
@@ -543,11 +505,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6d6f52f20848ba4f937223caa240426, type: 3}
---- !u!4 &2113912844 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7371996630993148092, guid: 1116dc37f42c7554b82d52f0042e4ebe, type: 3}
-  m_PrefabInstance: {fileID: 621552669}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &751927825791967184
 PrefabInstance:
   m_ObjectHideFlags: 0

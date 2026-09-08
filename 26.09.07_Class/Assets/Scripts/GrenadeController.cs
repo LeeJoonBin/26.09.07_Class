@@ -9,12 +9,15 @@ public class GrenadeController : MonoBehaviour
     [SerializeField] private GrenadaMovement _grenadePrefab;
     [SerializeField] private float _maxKeydown;
     [SerializeField] private Transform _muzzlePoint;
-    
     [SerializeField]private float _grenadeSpeed;
     [SerializeField]private float _grenadeDestoyTime;
+    [SerializeField] private int _maxGrenade;
 
     private float _countKeydown;
     private float _plusSpeed;
+    private bool _isPressedFire => Input.GetKeyDown(_throwKey);
+    private bool _hasGrenade => _maxGrenade > 0;
+    private bool _canThrow => _isPressedFire && _hasGrenade;
 
     private void Update()
     {
@@ -25,10 +28,9 @@ public class GrenadeController : MonoBehaviour
 
     private void ThrowGrenade()
     {
-        if (!Input.GetKeyDown(_throwKey)) return;
-        
+        if (!_canThrow) return;
+        _maxGrenade--;
         spawnGrenade();
-        
     }
 
     public void CountKeydown()
