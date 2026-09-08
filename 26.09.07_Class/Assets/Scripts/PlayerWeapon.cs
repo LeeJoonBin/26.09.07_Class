@@ -12,50 +12,52 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private float _range;
     [SerializeField] private int _damage;
     [SerializeField] private float _cooldown;
-    [SerializeField] private int _maxMagazineCount;
-    [SerializeField] 
+    [SerializeField] private int _maxMagazine;
+    [SerializeField] private FlameEffect _flameEffect;
+    [SerializeField] private FlameEffect _bulletFlameEffectPrefab;
     
     
-    //-----------
-    private int _currentMagazineCount;
-    private bool _isPressReload => Input.GetKey(_reloadKey);
-    // ---------
-    private float  _currentCooldown;
-    private bool _isPressedFire => Input.GetKeyDown(_fireKey);
-    private bool _isReadyFire => _currentCooldown <= _cooldown;
-    private bool _hasBullet => _currentMagazineCount > 0;
-    private bool _canFire => _isPressedFire && _isReadyFire && _hasBullet;
+    private float _currentCooldown;
+    private int _currentMagazine;
+    private bool _isPressedFire => Input.GetKey(_fireKey);
+    private bool _isPressedReload => Input.GetKeyDown(_reloadKey);
+    private bool _isReadyFire => _currentCooldown >= _cooldown;
+    private bool _hasBullets => _currentMagazine > 0;
+    private bool _canFire => _isPressedFire && _isReadyFire && _hasBullets;
     
-    // 30
-    // 리로드 R
-    // 무제한
+    // ------------------------------------------
     private void Awake() => CacheComponents();
-    private void Start() =>  Init();
-
-    private void Update()
-    {
-        UpdateCooldown();
-    }
-
-    public void Reload()
-    {
-        if(!_isPressReload) return;
-        _currentMagazineCount = _maxMagazineCount;
-        Debug.Log($"Reload: {_currentMagazineCount}");
-    }
+    private void Start() => Init();
+    private void Update() => UpdateCooldown();
+    // ------------------------------------------
 
     public void Fire()
     {
         if (!_canFire) return;
+        
+        _currentMagazine--;
         _currentCooldown = 0f;
-        _currentMagazineCount--;
+        PlayFlameEffect();
+
         if (!TryGetDamageable(out IDamageable damageable)) return;
+        
         damageable.TakeDamage(_damage);
         Debug.Log($"Player: {damageable.GameObject.name}에게 발사");
-        Debug.Log($"{_currentMagazineCount}");
+        Debug.Log($"{_currentMagazine}");
     }
 
-    
+    private void PlayFlameEffect()
+    {
+        _flameEffect.gameObject.SetActive(true);
+        _flameEffect.Play();
+    }
+
+    private void PlayBulletImpactEffect(RaycastHit hit)
+    {
+        Transform effectTransform = Instantiate(_bulletFlameEffectPrefab).transform;
+        effectTransform.position = hit.point;
+        effectTransform.forward = hit.normal;
+    }
     private bool TryGetDamageable(out IDamageable damageable)
     {
         bool result = false;
@@ -66,6 +68,7 @@ public class PlayerWeapon : MonoBehaviour
         
         if (Physics.Raycast(ray, out hit, _range))
         {
+            PlayBulletImpactEffect(hit);
             result = hit.transform.TryGetComponent(out damageable);
         }
 
@@ -77,15 +80,23 @@ public class PlayerWeapon : MonoBehaviour
         _cameraTransform = Camera.main.transform;
     }
 
-    private void UpdateCooldown()
-    {
-        if (_isReadyFire)  return;
-        _currentCooldown += Time.deltaTime;
-    }
-
     private void Init()
     {
         _currentCooldown = 0f;
-        _currentMagazineCount = _maxMagazineCount;
+        _currentMagazine = _maxMagazine;
+    }
+
+    private void UpdateCooldown()
+    {
+        if (_isReadyFire) return;
+        
+        _currentCooldown += Time.deltaTime;
+    }
+
+    public void Reload()
+    {
+        if (!_isPressedReload) return;
+        
+        _currentMagazine = _maxMagazine;
     }
 }

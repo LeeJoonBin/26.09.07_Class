@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IInteractor
 {
     [SerializeField] private Transform _cameraPivot;
     [SerializeField] private float _detectionRange;
@@ -13,13 +13,15 @@ public class PlayerController : MonoBehaviour
     private PlayerMovement _movement;
     private Transform _cameraTransform;
     
-    /*private II _targetnteractable;*/
-    /*private bool _hasDetectInteractable => _targetnteractable != null;*/
+    private IInteractable _targetInteractable;
+
+    private bool _hasDetectInteractable => _targetInteractable != null;
     private bool _isPressedInteractionKey => Input.GetKeyDown(_interactionKey);
-    /*private bool _canInteraction => _hasDetectInteractable && _isPressedInteractionKey;*/
-    
-    public GameObject GameObject {get => gameObject;}
-    // ------------------------------------
+    private bool _canInteraction => _hasDetectInteractable && _isPressedInteractionKey;
+
+    public GameObject GameObject { get => gameObject; }
+
+    // -----------------------------------------------
     private void Awake() => CacheComponents();
     private void Start() => LockCursor();
     private void FixedUpdate() => _movement.Move();
@@ -30,15 +32,15 @@ public class PlayerController : MonoBehaviour
         _weapon.Fire();
         _weapon.Reload();
         DetectInteractable();
-        /*TryInteract();*/
+        TryInteract();
     }
 
     private void LateUpdate()
     {
         SetWeaponTransform();
-        SetCamraTransform();
+        SetCameraTransform();
     }
-    // ----------------------------------
+    // -----------------------------------------------
     
     private void CacheComponents()
     {
@@ -56,45 +58,57 @@ public class PlayerController : MonoBehaviour
     private void SetWeaponTransform()
     {
         _weapon.transform.SetPositionAndRotation(
-            _cameraPivot.position,
+            _cameraPivot.position, 
             _cameraPivot.rotation
             );
     }
-    private void SetCamraTransform()
+    
+    private void SetCameraTransform()
     {
-        _cameraTransform.SetPositionAndRotation(_cameraPivot.position, _cameraPivot.rotation);
-        // _cameraPivot.position = _cameraTransform.position;
-        // _cameraPivot.rotation = _cameraTransform.rotation;
+        _cameraTransform.SetPositionAndRotation(
+            _cameraPivot.position,
+            _cameraPivot.rotation
+            );
+        
+        // _cameraTransform.position = _cameraPivot.position;
+        // _cameraTransform.rotation = _cameraPivot.rotation;
     }
 
     public void DetectInteractable()
-    {   
+    {
         Ray ray = new Ray(_cameraTransform.position, _cameraTransform.forward);
         RaycastHit hit;
-        
-        if (!Physics.Raycast(ray, out hit,  _detectionRange))
+
+        if (!Physics.Raycast(ray, out hit, _detectionRange))
         {
-            
+            if (_hasDetectInteractable)
+            {
+                _targetInteractable.Untargeting();
+                _targetInteractable = null;
+            }
+
             return;
         }
-        /*if (_hasDetectInteractable)
-        {
-            if (hit.collider.gameObject == _targetnteractable.GameObject)
-            {
-                return;
-            }
-            
-        }*/
-        
-        /*_targetnteractable = hit.collider.GetComponent<IInteractable>();*/
-        
-        /*if(_hasDetectInteractable) Debug.Log($"{_targetnteractable.GameObject.name} 감지");*/
-    }
-    /*public void TryInteract()
-    {
-        if(!_canInteraction) return;
 
-        _targetnteractable.Interact(this);
-        _targetnteractable = null;
-    }*/
+        if (_hasDetectInteractable)
+        {
+            if (hit.collider.gameObject == _targetInteractable.GameObject)
+            {
+                return; // 같은 Interactable을 계속 주시하고 있는 경우
+            }
+        }
+
+        _targetInteractable?.Untargeting();
+        _targetInteractable = hit.collider.GetComponent<IInteractable>();
+        
+        _targetInteractable?.Targeting();
+    }
+
+    public void TryInteract()
+    {
+        if (!_canInteraction) return;
+        
+        _targetInteractable.Interact(this);
+        _targetInteractable = null;
+    }
 }
