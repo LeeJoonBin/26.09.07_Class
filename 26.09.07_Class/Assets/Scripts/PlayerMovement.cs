@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
-
     [SerializeField] private Transform _cameraPivot;
     [SerializeField] private float _mouseSensitivity;
     [SerializeField] private float _minPitch;
@@ -16,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake() => CacheComponents();
 
-    
+    public void AddSpeed(float speed) => _moveSpeed += speed;
     public void Rotate()
     {
         Vector3 input = ReadRotateInput() * _mouseSensitivity;

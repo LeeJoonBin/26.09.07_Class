@@ -79,7 +79,7 @@ public class TurretController : MonoBehaviour
         bullet.SetData(_bulletDamage, _bulletSpeed, _bulletDestoryDelay);
     }
 
-private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -127,6 +127,4 @@ private void OnTriggerEnter(Collider other)
 
         }
     }
-    
-    
 }

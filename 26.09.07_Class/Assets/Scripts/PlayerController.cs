@@ -111,4 +111,9 @@ public class PlayerController : MonoBehaviour, IInteractor
         _targetInteractable.Interact(this);
         _targetInteractable = null;
     }
+
+    public void Interact(IInteractor interactor)
+    {
+        
+    }
 }
