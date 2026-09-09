@@ -10,10 +10,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _minPitch;
     [SerializeField] private float _maxPitch;
 
+    private float a;
     private float _pitch;
     private Rigidbody _rigidbody;
 
-    private void Awake() => CacheComponents();
+
+    private void Awake()
+    {
+        AddSpeed(a);
+        CacheComponents();
+    }
 
     public void AddSpeed(float speed) => _moveSpeed += speed;
     public void Rotate()
@@ -22,7 +28,6 @@ public class PlayerMovement : MonoBehaviour
 
         // 좌우 -> 회전
         transform.Rotate(0, input.y, 0, Space.Self);
-        
         
         // 상하 -> 범위 내로 들어오게 해야됨.
         _pitch = Mathf.Clamp(_pitch +input.x, _minPitch, _maxPitch);

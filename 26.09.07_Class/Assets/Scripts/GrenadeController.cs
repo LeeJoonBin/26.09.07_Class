@@ -5,22 +5,23 @@ using UnityEngine;
 
 public class GrenadeController : MonoBehaviour
 {
-    [SerializeField] private KeyCode _throwKey = KeyCode.Alpha3;
-    [SerializeField] private GrenadaMovement _grenadePrefab;
-    [SerializeField] private float _maxKeydown;
-    [SerializeField] private Transform _muzzlePoint;
-    [SerializeField]private float _grenadeSpeed;
     [SerializeField]private float _grenadeDestoyTime;
-    [SerializeField] private int _maxGrenade;
+    
+    [SerializeField] private GrenadaMovement _grenadePrefab;
     [SerializeField] private FlameEffect _flameEffect;
-
+    
+    private Rigidbody _rigidbody;
     private float _countKeydown;
     private float _plusSpeed;
-    private bool _isPressedFire => Input.GetKeyDown(_throwKey);
-    private bool _hasGrenade => _maxGrenade > 0;
-    private bool _canThrow => _isPressedFire && _hasGrenade;
+    
 
-    private void Update()
+    private void Start() => _rigidbody = GetComponent<Rigidbody>();
+
+    private void Force(Vector3 force)
+    {
+        _rigidbody.velocity = force;
+    }
+    /*private void Update()
     {
         
         ThrowGrenade();
@@ -60,5 +61,5 @@ public class GrenadeController : MonoBehaviour
         GrenadaMovement grenade = Instantiate(_grenadePrefab,_muzzlePoint.position, _muzzlePoint.rotation);
         grenade.SetData( _grenadeSpeed , _grenadeDestoyTime, _flameEffect);
         
-    }
+    }*/
 }

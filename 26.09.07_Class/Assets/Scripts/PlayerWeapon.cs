@@ -9,6 +9,7 @@ public class PlayerWeapon : MonoBehaviour
 
     [SerializeField] private KeyCode _fireKey = KeyCode.Mouse0;
     [SerializeField] private KeyCode _reloadKey = KeyCode.R;
+    
     [SerializeField] private float _range;
     [SerializeField] private int _damage;
     [SerializeField] private float _cooldown;
@@ -16,14 +17,27 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private FlameEffect _flameEffect;
     [SerializeField] private FlameEffect _bulletFlameEffectPrefab;
     
+    [Header("Grenade")]
+    [SerializeField] private KeyCode _throwKey = KeyCode.Alpha3;
+    [SerializeField] private int _maxGrenade;
+    [SerializeField] private float _maxGrenadeThrowForce; //3
+    [SerializeField] private Transform _grenadeMuzzlePoint;
+    [SerializeField] private float _currentGrenadeThrowForce;
+    
+    public LayerMask TargetLayer;
     
     private float _currentCooldown;
     private int _currentMagazine;
+    private bool _isUpGrenadeKey => Input.GetKeyDown(_throwKey);
     private bool _isPressedFire => Input.GetKey(_fireKey);
     private bool _isPressedReload => Input.GetKeyDown(_reloadKey);
+    private bool _hasGrenade => _maxGrenade > 0;
+    private bool _hasEnoughForce => _currentMagazine >= _maxMagazine * 0.3;
+    private bool _canThrowGrenade => _isPressedFire && _hasGrenade;
     private bool _isReadyFire => _currentCooldown >= _cooldown;
     private bool _hasBullets => _currentMagazine > 0;
     private bool _canFire => _isPressedFire && _isReadyFire && _hasBullets;
+    private bool _canThrow => _canThrowGrenade && _hasEnoughForce;
     
     // ------------------------------------------
     private void Awake() => CacheComponents();
@@ -38,13 +52,26 @@ public class PlayerWeapon : MonoBehaviour
         _currentMagazine--;
         _currentCooldown = 0f;
         PlayFlameEffect();
+        
 
         if (!TryGetDamageable(out IDamageable damageable)) return;
         
         damageable.TakeDamage(_damage);
-        Debug.Log($"Player: {damageable.GameObject.name}에게 발사");
         Debug.Log($"{_currentMagazine}");
     }
+    /*public void Fire(float fireRate)
+    {
+        if (!_canFire) return;
+        _cooldown /= fireRate;
+        _currentMagazine--;
+        _currentCooldown = 0f;
+        PlayFlameEffect();
+
+        if (!TryGetDamageable(out IDamageable damageable)) return;
+        
+        damageable.TakeDamage(_damage);
+        Debug.Log($"{_currentMagazine}");
+    }*/
 
     private void PlayFlameEffect()
     {
@@ -66,7 +93,7 @@ public class PlayerWeapon : MonoBehaviour
         Ray ray = new Ray(_cameraTransform.position, _cameraTransform.forward);
         RaycastHit hit;
         
-        if (Physics.Raycast(ray, out hit, _range))
+        if (Physics.Raycast(ray, out hit, _range, TargetLayer))
         {
             PlayBulletImpactEffect(hit);
             result = hit.transform.TryGetComponent(out damageable);
