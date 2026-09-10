@@ -28,12 +28,14 @@ public class PlayerWeapon : MonoBehaviour
     
     private float _currentCooldown;
     private int _currentMagazine;
+    public int CurrentMagazine => _currentMagazine;
+    public int MaxMagazine => _maxMagazine;
     private bool _isUpGrenadeKey => Input.GetKeyDown(_throwKey);
     private bool _isPressedFire => Input.GetKey(_fireKey);
     private bool _isPressedReload => Input.GetKeyDown(_reloadKey);
     private bool _hasGrenade => _maxGrenade > 0;
     private bool _hasEnoughForce => _currentMagazine >= _maxMagazine * 0.3;
-    private bool _canThrowGrenade => _isPressedFire && _hasGrenade;
+    private bool _canThrowGrenade => _isUpGrenadeKey && _hasGrenade;
     private bool _isReadyFire => _currentCooldown >= _cooldown;
     private bool _hasBullets => _currentMagazine > 0;
     private bool _canFire => _isPressedFire && _isReadyFire && _hasBullets;
@@ -57,7 +59,6 @@ public class PlayerWeapon : MonoBehaviour
         if (!TryGetDamageable(out IDamageable damageable)) return;
         
         damageable.TakeDamage(_damage);
-        Debug.Log($"{_currentMagazine}");
     }
     /*public void Fire(float fireRate)
     {
@@ -85,7 +86,7 @@ public class PlayerWeapon : MonoBehaviour
         effectTransform.position = hit.point;
         effectTransform.forward = hit.normal;
     }
-    private bool TryGetDamageable(out IDamageable damageable)
+    public bool TryGetDamageable(out IDamageable damageable)
     {
         bool result = false;
         damageable = null;

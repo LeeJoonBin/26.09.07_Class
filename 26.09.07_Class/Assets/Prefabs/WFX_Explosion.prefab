@@ -28938,7 +28938,6 @@ GameObject:
   - component: {fileID: 7057487344464014353}
   - component: {fileID: 449241168270993194}
   - component: {fileID: 3820737079532464564}
-  - component: {fileID: 7410946894084282103}
   m_Layer: 0
   m_Name: WFX_Explosion
   m_TagString: Untagged
@@ -33759,21 +33758,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnlyDeactivate: 0
---- !u!114 &7410946894084282103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6010331959337075078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5db2b50a28dd39b45a8cd0c0cd3f1404, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _deactivateDelay: 0
-  _isDestroy: 0
-  _platInStart: 0
 --- !u!1 &8286661392220349138
 GameObject:
   m_ObjectHideFlags: 0

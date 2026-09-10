@@ -8,7 +8,12 @@ public class PlayerController : MonoBehaviour, IInteractor
     [SerializeField] private Transform _cameraPivot;
     [SerializeField] private float _detectionRange;
     [SerializeField] private KeyCode _interactionKey = KeyCode.E;
+    [SerializeField] private float _currentHealth;
+    [SerializeField] private float _maxHealth;
     
+    public float CurrentHealth => _currentHealth;
+    public  float MaxHealth => _maxHealth;
+    public Transform CameraPivot => _cameraPivot;
     private PlayerWeapon _weapon;
     private PlayerMovement _movement;
     private Transform _cameraTransform;

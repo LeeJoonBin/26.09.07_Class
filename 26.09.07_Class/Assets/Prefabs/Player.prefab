@@ -132,13 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d469ea67f04c84849978f969c46fbf21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _throwKey: 51
-  _grenadePrefab: {fileID: 8682823756083285682, guid: d7d5e78be6f6edc4cb06f8404877011f, type: 3}
-  _maxKeydown: 3
-  _muzzlePoint: {fileID: 7371996630993148092}
-  _grenadeSpeed: 5
   _grenadeDestoyTime: 1.1
-  _maxGrenade: 1000
+  _grenadePrefab: {fileID: 8682823756083285682, guid: d7d5e78be6f6edc4cb06f8404877011f, type: 3}
   _flameEffect: {fileID: 7739478055208513647, guid: d4adf16a7c1587947a878d77efd07277, type: 3}
 --- !u!1 &3233558890373095391
 GameObject:
@@ -350,6 +345,14 @@ MonoBehaviour:
   _maxMagazine: 30
   _flameEffect: {fileID: 6898027869763284471}
   _bulletFlameEffectPrefab: {fileID: -7566425489019400993, guid: f085bfaa5ca193441aefbee52ff89f75, type: 3}
+  _throwKey: 51
+  _maxGrenade: 0
+  _maxGrenadeThrowForce: 0
+  _grenadeMuzzlePoint: {fileID: 0}
+  _currentGrenadeThrowForce: 0
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &3058865799222211786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -446,23 +449,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8038506834111953860, guid: d4adf16a7c1587947a878d77efd07277, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.313
+      value: 1.375
       objectReference: {fileID: 0}
     - target: {fileID: 8038506834111953860, guid: d4adf16a7c1587947a878d77efd07277, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000295028
-      objectReference: {fileID: 0}
-    - target: {fileID: 8038506834111953860, guid: d4adf16a7c1587947a878d77efd07277, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 8.792485e-15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8038506834111953860, guid: d4adf16a7c1587947a878d77efd07277, type: 3}
-      propertyPath: m_LocalRotation.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8038506834111953860, guid: d4adf16a7c1587947a878d77efd07277, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038506834111953860, guid: d4adf16a7c1587947a878d77efd07277, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8038506834111953860, guid: d4adf16a7c1587947a878d77efd07277, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000029802354
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8038506834111953860, guid: d4adf16a7c1587947a878d77efd07277, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

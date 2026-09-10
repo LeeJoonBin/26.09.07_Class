@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 
 public class TurretController : MonoBehaviour, IDamageable
@@ -10,8 +12,13 @@ public class TurretController : MonoBehaviour, IDamageable
     [SerializeField] private Transform _headTransform;
     [SerializeField] private Transform _muzzlePoint;
     [SerializeField] private float _turretHealth;
-    [SerializeField] private FlameEffect _flameEffectPrefab;
-    
+    [SerializeField] private float _maxTurretHealth;
+    [SerializeField] private GameObject _flameEffectPrefab;
+    [SerializeField] private TextMeshProUGUI _destroyText;
+    public GameObject GameObject { get => gameObject; }
+    public float TurretHealth => _maxTurretHealth;
+    public float MaxTurretHealth => _maxTurretHealth;
+    private float _respawnTimer = 3f;
     public LayerMask TargetLayer;
     [Header("Bullet")]
     [SerializeField] private BulletController _bulletPrefab;
@@ -19,13 +26,14 @@ public class TurretController : MonoBehaviour, IDamageable
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private float _bulletDestoryDelay;
     
+    
     private Transform _playerTransform;
     private float _currentCooldown;
-    private bool _noHealth => _turretHealth <= 0;
     private bool _isPlayerInTrigger => _playerTransform != null;
-    private bool _isPlayerInsight = false;
+    private bool _isPlayerInsight;
     private bool _isReadyToFire => _currentCooldown >= _cooldown;
     private SphereCollider _sphereCollider;
+    private Transform _transform;
     private IDamageable _damageableImplementation;
 
     private void Awake() => CacheComponents();
@@ -36,6 +44,8 @@ public class TurretController : MonoBehaviour, IDamageable
         Rotate();
         Fire();
     }
+
+    
 
     private void CacheComponents()
     {
@@ -92,10 +102,11 @@ public class TurretController : MonoBehaviour, IDamageable
             Debug.Log("찾음");
         }*/
          int layer = (1 << other.gameObject.layer);
-         Debug.Log(layer);
+         
          if ((TargetLayer.value & layer) != 0)
          {
             _playerTransform = other.gameObject.transform;
+            Debug.Log("찾음");
          }
     }
 
@@ -123,10 +134,6 @@ public class TurretController : MonoBehaviour, IDamageable
             
         Ray ray = new Ray(from, (to - from).normalized);
         RaycastHit hit;
-
-        // LaterMask 배운 후 리팩토링
-        // 발사 높이와 감지 높이를 다르게 해서 우희
-        
         
         if (Physics.Raycast(ray, out hit, _sphereCollider.radius, TargetLayer))
         {
@@ -136,23 +143,24 @@ public class TurretController : MonoBehaviour, IDamageable
 
     private void PlayFlameEffect()
     {
-        _flameEffectPrefab.gameObject.SetActive(true);
-        _flameEffectPrefab.Play();
+        Instantiate(_flameEffectPrefab, _muzzlePoint.position, _muzzlePoint.rotation);
+        Destroy(gameObject);
     }
-
-    public GameObject GameObject { get; }
+    
 
     public void TakeDamage(int damage)
     {
-        if (_noHealth) return;
         _turretHealth -= damage;
         Debug.Log(_turretHealth);
         if (_turretHealth <= 0)
         {
             PlayFlameEffect();
-            Destroy(gameObject);
         }
-        PlayFlameEffect();
-        Destroy(gameObject);
+        
+    }
+
+    private void PrintText()
+    {
+        _destroyText.text = $"<color=red>!터렛 파괴!</color>";
     }
 }
