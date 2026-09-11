@@ -12,6 +12,9 @@ public class ItemBox : MonoBehaviour, IInteractable
     [SerializeField] private float _cooldown = 0f;
     public GameObject GameObject { get => gameObject; }
     private Outline _outline;
+    private Buff _buff;
+    
+    public LayerMask LayerMask { get => gameObject.layer; }
     
     private void Awake() => CacheComponents();
     private void Start() => Init();
@@ -28,14 +31,17 @@ public class ItemBox : MonoBehaviour, IInteractable
     
     public void Interact(IInteractor owner)
     {
-        GameObject own;
-        if (owner.GameObject.CompareTag("Player"))
+        if (!(owner.GameObject.layer == LayerMask.NameToLayer("Player")))return;
+
+        
+            
+            /*if (owner.GameObject.CompareTag("Player"))
         {
             own = GameObject.Find("Player");
             own.GetComponent<PlayerMovement>().AddSpeed(_speedBoost);
-            
+
             Destroy(gameObject);
-        }
+        }*/
         // onwer의 능력치를 상승시킨다던가...
         // 인벤토리로 들어간다던가....
         // 무기가 생긴다던가...
@@ -51,6 +57,7 @@ public class ItemBox : MonoBehaviour, IInteractable
 
     private void CacheComponents()
     {
+        _buff  = gameObject.GetComponent<Buff>();
         _outline = gameObject.GetComponent<Outline>();
     }
 }

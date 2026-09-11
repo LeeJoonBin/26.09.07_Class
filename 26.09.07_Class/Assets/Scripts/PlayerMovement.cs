@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed;
+    
     [SerializeField] private Transform _cameraPivot;
     [SerializeField] private float _mouseSensitivity;
     [SerializeField] private float _minPitch;
     [SerializeField] private float _maxPitch;
 
+    private float _moveSpeed => _stats.MoveSpeed;
+    private Playerstat _stats;
     private float a;
     private float _pitch;
     private Rigidbody _rigidbody;
@@ -17,11 +19,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        AddSpeed(a);
         CacheComponents();
     }
-
-    public void AddSpeed(float speed) => _moveSpeed += speed;
+    
     public void Rotate()
     {
         Vector3 input = ReadRotateInput() * _mouseSensitivity;
@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void CacheComponents()
     {
+        _stats = GetComponent<Playerstat>();
         _rigidbody = GetComponent<Rigidbody>();
     }
 }

@@ -6,13 +6,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IInteractor
 {
     [SerializeField] private Transform _cameraPivot;
-    [SerializeField] private float _detectionRange;
     [SerializeField] private KeyCode _interactionKey = KeyCode.E;
     [SerializeField] private float _currentHealth;
-    [SerializeField] private float _maxHealth;
+    private float _health => _stats.Health;
+    private float _detectionRange => _stats.InteractRange;
+    private Playerstat _stats;
+    public Playerstat Stats => _stats;
     
     public float CurrentHealth => _currentHealth;
-    public  float MaxHealth => _maxHealth;
+    public  float MaxHealth => _health;
     public Transform CameraPivot => _cameraPivot;
     private PlayerWeapon _weapon;
     private PlayerMovement _movement;
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour, IInteractor
     
     private void CacheComponents()
     {
+        _stats = GetComponent<Playerstat>();
         _movement = GetComponent<PlayerMovement>();
         _weapon = GetComponentInChildren<PlayerWeapon>();
         _cameraTransform = Camera.main.transform;
