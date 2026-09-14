@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerUIController : MonoBehaviour
-{
+{/*
     [SerializeField] private TextMeshProUGUI _magazine;
     [SerializeField] private TextMeshProUGUI _health;
     private PlayerWeapon _weapon;
@@ -32,5 +32,5 @@ public class PlayerUIController : MonoBehaviour
     public void RefreshHealthUI()
     {
         _health.text = $"{_currentHealth.CurrentHealth} / {_currentHealth.MaxHealth}";
-    }
+    }*/
 }

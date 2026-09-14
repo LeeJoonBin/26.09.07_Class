@@ -12,6 +12,9 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private int _maxMagazine;
     [SerializeField] private FlameEffect _flameEffect;
     [SerializeField] private FlameEffect _bulletFlameEffectPrefab;
+    [SerializeField] private float _cooldown;
+    [SerializeField] private int _damage;
+    [SerializeField] private float _range;
     
     [Header("Grenade")]
     [SerializeField] private KeyCode _throwKey = KeyCode.Alpha3;
@@ -21,10 +24,7 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private float _currentGrenadeThrowForce;
     
     public LayerMask TargetLayer;
-    private int _damage => _stats.Damage;
-    private float _cooldown => _stats.WeaponCoolDown;
-    private float _range => _stats.WeaponRange;
-    private Playerstat _stats;
+
     private float _currentCooldown;
     private int _currentMagazine;
     public int CurrentMagazine => _currentMagazine;
@@ -104,7 +104,6 @@ public class PlayerWeapon : MonoBehaviour
 
     private void CacheComponents()
     {
-        _stats = GetComponent<Playerstat>();
         _cameraTransform = Camera.main.transform;
     }
 

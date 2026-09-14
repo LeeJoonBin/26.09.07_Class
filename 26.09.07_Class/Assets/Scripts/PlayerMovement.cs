@@ -9,9 +9,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _mouseSensitivity;
     [SerializeField] private float _minPitch;
     [SerializeField] private float _maxPitch;
-
-    private float _moveSpeed => _stats.MoveSpeed;
-    private Playerstat _stats;
+    [SerializeField] private float _moveSpeed;
+    
     private float a;
     private float _pitch;
     private Rigidbody _rigidbody;
@@ -70,7 +69,6 @@ public class PlayerMovement : MonoBehaviour
     
     private void CacheComponents()
     {
-        _stats = GetComponent<Playerstat>();
         _rigidbody = GetComponent<Rigidbody>();
     }
 }

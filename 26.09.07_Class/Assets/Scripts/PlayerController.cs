@@ -8,19 +8,19 @@ public class PlayerController : MonoBehaviour, IInteractor
     [SerializeField] private Transform _cameraPivot;
     [SerializeField] private KeyCode _interactionKey = KeyCode.E;
     [SerializeField] private float _currentHealth;
-    private float _health => _stats.Health;
-    private float _detectionRange => _stats.InteractRange;
-    private Playerstat _stats;
-    public Playerstat Stats => _stats;
+  [SerializeField] private float _detectionRange;
+  
+    
     
     public float CurrentHealth => _currentHealth;
-    public  float MaxHealth => _health;
+    
     public Transform CameraPivot => _cameraPivot;
     private PlayerWeapon _weapon;
     private PlayerMovement _movement;
     private Transform _cameraTransform;
     
     private IInteractable _targetInteractable;
+    
 
     private bool _hasDetectInteractable => _targetInteractable != null;
     private bool _isPressedInteractionKey => Input.GetKeyDown(_interactionKey);
@@ -35,11 +35,13 @@ public class PlayerController : MonoBehaviour, IInteractor
 
     private void Update()
     {
+        
         _movement.Rotate();
         _weapon.Fire();
         _weapon.Reload();
         DetectInteractable();
         TryInteract();
+        
     }
 
     private void LateUpdate()
@@ -51,7 +53,6 @@ public class PlayerController : MonoBehaviour, IInteractor
     
     private void CacheComponents()
     {
-        _stats = GetComponent<Playerstat>();
         _movement = GetComponent<PlayerMovement>();
         _weapon = GetComponentInChildren<PlayerWeapon>();
         _cameraTransform = Camera.main.transform;
@@ -78,8 +79,8 @@ public class PlayerController : MonoBehaviour, IInteractor
             _cameraPivot.rotation
             );
         
-        // _cameraTransform.position = _cameraPivot.position;
-        // _cameraTransform.rotation = _cameraPivot.rotation;
+        _cameraTransform.position = _cameraPivot.position;
+        _cameraTransform.rotation = _cameraPivot.rotation;
     }
 
     public void DetectInteractable()

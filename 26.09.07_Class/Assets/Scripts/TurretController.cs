@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class TurretController : MonoBehaviour, IDamageable
 {
+    [SerializeField] private ObjectPool _bulletPool;
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _cooldown;
     [SerializeField] private Transform _headTransform;
@@ -24,7 +25,7 @@ public class TurretController : MonoBehaviour, IDamageable
     [SerializeField] private BulletController _bulletPrefab;
     [SerializeField] private int _bulletDamage;
     [SerializeField] private float _bulletSpeed;
-    [SerializeField] private float _bulletDestoryDelay;
+    [SerializeField] private float _bulletReturnDelay;
     
     
     private Transform _playerTransform;
@@ -52,6 +53,7 @@ public class TurretController : MonoBehaviour, IDamageable
         _sphereCollider = GetComponent<SphereCollider>();
     }
 
+    
     private void Fire()
     {
         if (!_isPlayerInsight || !_isPlayerInTrigger) return;
@@ -81,17 +83,26 @@ public class TurretController : MonoBehaviour, IDamageable
      
         _headTransform.Rotate(Vector3.up, _rotateSpeed * Time.deltaTime);
     }
-
+    
     private void spawnBullet()
     {
-        // 프리팹
-        // Instantiate 
-        BulletController bullet = Instantiate(
+        // 1. 얻어오기
+        IPoolable bullet = _bulletPool.Take();
+        
+        // 2. Transform.position, rotation 설정
+        bullet.tr.position = _muzzlePoint.position;
+        bullet.tr.rotation = _muzzlePoint.rotation;
+        
+        // 3 . 활성화 
+        bullet.tr.gameObject.SetActive(true);
+        /*BulletController bullet = Instantiate(
             _bulletPrefab,
             _muzzlePoint.position,
             _muzzlePoint.rotation);
+            */
         
-        bullet.SetData(_bulletDamage, _bulletSpeed, _bulletDestoryDelay);
+        //getcomponent말고 비교적 연산이 적은 것으로 불러오자
+        (bullet as BulletController).SetData(_bulletDamage, _bulletSpeed, _bulletReturnDelay);
     }
 
     private void OnTriggerEnter(Collider other)
