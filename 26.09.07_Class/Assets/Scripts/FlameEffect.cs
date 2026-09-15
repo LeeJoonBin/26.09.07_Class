@@ -5,7 +5,6 @@ using UnityEngine;
 public class FlameEffect : MonoBehaviour
 {
     [SerializeField] private float _deactivateDelay;
-
     [SerializeField] private bool _isDestroy;
     [SerializeField] private bool _platInStart;
     private float _elapsedTime;

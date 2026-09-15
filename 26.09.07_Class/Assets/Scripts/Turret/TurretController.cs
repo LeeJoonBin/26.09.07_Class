@@ -7,35 +7,42 @@ using UnityEngine;
 
 public class TurretController : MonoBehaviour, IDamageable
 {
-    [SerializeField] private ObjectPool _bulletPool;
+    [Header("Turret")]
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _cooldown;
     [SerializeField] private Transform _headTransform;
     [SerializeField] private Transform _muzzlePoint;
+    
+    // 파괴시 텍스트
+    [SerializeField] private TextMeshProUGUI _destroyText;
+    // 터렛 파괴 이팩트
+    [SerializeField] private GameObject _flameEffectPrefab;
+    // 터렛 체력
     [SerializeField] private float _turretHealth;
     [SerializeField] private float _maxTurretHealth;
-    [SerializeField] private GameObject _flameEffectPrefab;
-    [SerializeField] private TextMeshProUGUI _destroyText;
-    public GameObject GameObject { get => gameObject; }
+    // 터렛 UI불러올 때 쓸 것 --------
     public float TurretHealth => _maxTurretHealth;
     public float MaxTurretHealth => _maxTurretHealth;
-    private float _respawnTimer = 3f;
+    //-------------
     public LayerMask TargetLayer;
+    public GameObject GameObject { get => gameObject; }
+    
     [Header("Bullet")]
+    [SerializeField] private ObjectPool _bulletPool;
     [SerializeField] private BulletController _bulletPrefab;
     [SerializeField] private int _bulletDamage;
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private float _bulletReturnDelay;
     
     
-    private Transform _playerTransform;
-    private float _currentCooldown;
+    private Transform _playerTransform; // Player포지션
+    private float _currentCooldown; // 불렛발사 쿨타임계산할 때 필요
     private bool _isPlayerInTrigger => _playerTransform != null;
     private bool _isPlayerInsight;
     private bool _isReadyToFire => _currentCooldown >= _cooldown;
-    private SphereCollider _sphereCollider;
-    private Transform _transform;
-    private IDamageable _damageableImplementation;
+    private SphereCollider _sphereCollider;  // 이거 왜 필요한지 아직 잘 모르겠음
+    private Transform _transform; // 이것도? 사용된적이없는데 한번 나중에 수정해봐야할듯
+    private IDamageable _damageableImplementation; // ?? 이것도
 
     private void Awake() => CacheComponents();
     private void Update()
@@ -46,13 +53,10 @@ public class TurretController : MonoBehaviour, IDamageable
         Fire();
     }
 
-    
-
     private void CacheComponents()
     {
         _sphereCollider = GetComponent<SphereCollider>();
     }
-
     
     private void Fire()
     {
@@ -107,23 +111,25 @@ public class TurretController : MonoBehaviour, IDamageable
 
     private void OnTriggerEnter(Collider other)
     {
-        /*if (TargetLayer.Contains(other))
+        /* 메서드확장자 사용해서 한것
+        if (TargetLayer.Contains(other))
         {
             _playerTransform = other.transform;
             Debug.Log("찾음");
-        }*/
+        }
+        */
          int layer = (1 << other.gameObject.layer);
          
          if ((TargetLayer.value & layer) != 0)
          {
             _playerTransform = other.gameObject.transform;
-            Debug.Log("찾음");
          }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        int layer = (1 << other.gameObject.layer);
+        if ((TargetLayer.value & layer) !=0)
         {
             _playerTransform = null;
         }

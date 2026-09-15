@@ -450,6 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 643ac83bf7d4fa3439bb31078351af79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _magazine: {fileID: 0}
 --- !u!1001 &621552669
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -639,6 +640,7 @@ GameObject:
   - component: {fileID: 694793812}
   - component: {fileID: 694793811}
   - component: {fileID: 694793810}
+  - component: {fileID: 694793814}
   m_Layer: 5
   m_Name: PlayerUI
   m_TagString: Untagged
@@ -730,6 +732,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &694793814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694793809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 643ac83bf7d4fa3439bb31078351af79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _magazine: {fileID: 476401918}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1582,10 +1597,6 @@ PrefabInstance:
       propertyPath: _bulletPool
       value: 
       objectReference: {fileID: 1463555769}
-    - target: {fileID: 1810687805087811094, guid: 21c0c55cdd3343d409e7860714e5703f, type: 3}
-      propertyPath: _bulletReturnDelay
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 6016233218792461201, guid: 21c0c55cdd3343d409e7860714e5703f, type: 3}
       propertyPath: m_Name
       value: NewTurret
@@ -1631,21 +1642,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7147822497125056619, guid: 21c0c55cdd3343d409e7860714e5703f, type: 3}
-      propertyPath: _pool
-      value: 
-      objectReference: {fileID: 1463555769}
-    - target: {fileID: 7147822497125056619, guid: 21c0c55cdd3343d409e7860714e5703f, type: 3}
       propertyPath: _bulletPool
       value: 
       objectReference: {fileID: 1463555769}
-    - target: {fileID: 7147822497125056619, guid: 21c0c55cdd3343d409e7860714e5703f, type: 3}
-      propertyPath: _bulletPrefab
-      value: 
-      objectReference: {fileID: -2628062520545006210, guid: 8a4c9cc867df0e345b40bf984d5b2f16, type: 3}
-    - target: {fileID: 8683409191354534174, guid: 21c0c55cdd3343d409e7860714e5703f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
