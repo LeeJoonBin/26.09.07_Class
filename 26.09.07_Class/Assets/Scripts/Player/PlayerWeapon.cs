@@ -42,7 +42,7 @@ public class PlayerWeapon : MonoBehaviour
     private bool _isReadyFire => _currentCooldown >= _cooldown;
     private bool _hasBullets => _currentMagazine > 0;
     private bool _canFire => _isPressedFire && _isReadyFire && _hasBullets;
-    private bool _canThrow => _canThrowGrenade && _hasEnoughForce;
+    private bool _canThrow => _canThrowGrenade && _hasEnoughForce && !_isReloading;
     
     // ------------------------------------------
     private void Awake() => CacheComponents();
@@ -116,6 +116,7 @@ public class PlayerWeapon : MonoBehaviour
         _currentCooldown = 0f;
         _currentMagazine = _maxMagazine;
     }
+    // 상시 돌려놓는던걸
 
     private void UpdateCooldown()
     {
@@ -123,11 +124,21 @@ public class PlayerWeapon : MonoBehaviour
         
         _currentCooldown += Time.deltaTime;
     }
-
+    [SerializeField] private float _reloadDelay;
+    private bool _isReloading;
     public void Reload()
     {
-        if (!_isPressedReload) return;
-        
+        if (_isReloading) return;
+        if (_isPressedReload)
+        {
+            StartCoroutine(ReloadRoutine());
+        }
+    }
+    public IEnumerator ReloadRoutine()
+    {
+        _isReloading = true;
+        yield return new WaitForSeconds(_reloadDelay);
         _currentMagazine = _maxMagazine;
+        _isReloading = false;
     }
 }

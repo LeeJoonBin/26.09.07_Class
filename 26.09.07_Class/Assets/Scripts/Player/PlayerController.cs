@@ -3,22 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IInteractor
+public class PlayerController : MonoBehaviour, IInteractor, IDamageable
 {
     [SerializeField] private Transform _cameraPivot;
     [SerializeField] private KeyCode _interactionKey = KeyCode.E;
     [SerializeField] private float _currentHealth;
-  [SerializeField] private float _detectionRange;
-  
+    [SerializeField] private float _detectionRange;
+    [SerializeField] private float _maxHealth;
     
     
     public float CurrentHealth => _currentHealth;
-    
+    public float MaxHealth => _maxHealth;
     public Transform CameraPivot => _cameraPivot;
     private PlayerWeapon _weapon;
     private PlayerMovement _movement;
     private Transform _cameraTransform;
-    
+    private PlayerUIController _playerUIController;
     private IInteractable _targetInteractable;
     
 
@@ -35,13 +35,11 @@ public class PlayerController : MonoBehaviour, IInteractor
 
     private void Update()
     {
-        
         _movement.Rotate();
         _weapon.Fire();
         _weapon.Reload();
         DetectInteractable();
         TryInteract();
-        
     }
 
     private void LateUpdate()
@@ -82,7 +80,7 @@ public class PlayerController : MonoBehaviour, IInteractor
         _cameraTransform.position = _cameraPivot.position;
         _cameraTransform.rotation = _cameraPivot.rotation;
     }
-
+    // 0.1 - 0.2 초에 한번씩 쏘개하기
     public void DetectInteractable()
     {
         Ray ray = new Ray(_cameraTransform.position, _cameraTransform.forward);
@@ -120,6 +118,12 @@ public class PlayerController : MonoBehaviour, IInteractor
         _targetInteractable.Interact(this);
         _targetInteractable = null;
     }
-
     
+
+    public void TakeDamage(int damage)
+    {
+        
+        _currentHealth -= damage;
+        _playerUIController.RefreshPlayerHealthUI();
+    }
 }

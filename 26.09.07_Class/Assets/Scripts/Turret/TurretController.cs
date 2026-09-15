@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
+using TMPro.EditorUtilities;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TurretController : MonoBehaviour, IDamageable
 {
@@ -13,15 +16,14 @@ public class TurretController : MonoBehaviour, IDamageable
     [SerializeField] private Transform _headTransform;
     [SerializeField] private Transform _muzzlePoint;
     
-    // 파괴시 텍스트
-    [SerializeField] private TextMeshProUGUI _destroyText;
+    
     // 터렛 파괴 이팩트
     [SerializeField] private GameObject _flameEffectPrefab;
     // 터렛 체력
-    [SerializeField] private float _turretHealth;
-    [SerializeField] private float _maxTurretHealth;
+    [SerializeField] private int _turretHealth;
+    [SerializeField] private int _maxTurretHealth;
     // 터렛 UI불러올 때 쓸 것 --------
-    public float TurretHealth => _maxTurretHealth;
+    public float TurretHealth => _turretHealth;
     public float MaxTurretHealth => _maxTurretHealth;
     //-------------
     public LayerMask TargetLayer;
@@ -33,7 +35,8 @@ public class TurretController : MonoBehaviour, IDamageable
     [SerializeField] private int _bulletDamage;
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private float _bulletReturnDelay;
-    
+    // UI
+    private EnemyUIController _ui;
     
     private Transform _playerTransform; // Player포지션
     private float _currentCooldown; // 불렛발사 쿨타임계산할 때 필요
@@ -45,6 +48,8 @@ public class TurretController : MonoBehaviour, IDamageable
     private IDamageable _damageableImplementation; // ?? 이것도
 
     private void Awake() => CacheComponents();
+    
+
     private void Update()
     {
         UpdateCurrentCooldown();
@@ -56,6 +61,7 @@ public class TurretController : MonoBehaviour, IDamageable
     private void CacheComponents()
     {
         _sphereCollider = GetComponent<SphereCollider>();
+        _ui = GetComponent<EnemyUIController>();
     }
     
     private void Fire()
@@ -163,21 +169,21 @@ public class TurretController : MonoBehaviour, IDamageable
         Instantiate(_flameEffectPrefab, _muzzlePoint.position, _muzzlePoint.rotation);
         Destroy(gameObject);
     }
-    
+
+    private void Init()
+    {
+        _turretHealth = _maxTurretHealth;
+        _ui.RefreshHealthBar(_turretHealth, _maxTurretHealth);
+    }
 
     public void TakeDamage(int damage)
     {
         _turretHealth -= damage;
+        _ui.RefreshHealthBar(_turretHealth, _maxTurretHealth);
         Debug.Log(_turretHealth);
         if (_turretHealth <= 0)
         {
             PlayFlameEffect();
         }
-        
-    }
-
-    private void PrintText()
-    {
-        _destroyText.text = $"<color=red>!터렛 파괴!</color>";
     }
 }

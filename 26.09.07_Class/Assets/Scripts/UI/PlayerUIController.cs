@@ -8,6 +8,9 @@ using UnityEngine.UI;
 public class PlayerUIController : MonoBehaviour
 { 
     [SerializeField] private TextMeshProUGUI _magazine;
+    [SerializeField] private Image _playerHealth;
+    
+    private PlayerController _player;
     private PlayerWeapon _weapon;
     private void Awake() => CacheComponents();
     private void CacheComponents()
@@ -23,6 +26,12 @@ public class PlayerUIController : MonoBehaviour
     public void RefreshMagazineUI()
     {
         _magazine.text = $"{_weapon.CurrentMagazine} / {_weapon.MaxMagazine}";
+        
+    }
+
+    public void RefreshPlayerHealthUI()
+    {
+        _playerHealth.fillAmount = _player.CurrentHealth / _player.MaxHealth;
     }
     /*
     [SerializeField] private TextMeshProUGUI _health;

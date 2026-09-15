@@ -1106,7 +1106,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 419701616}
   m_HandleRect: {fileID: 419701615}
   m_Direction: 2
-  m_Value: 0.9943268
+  m_Value: 0.9861923
   m_Size: 0.16296878
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1290,6 +1290,7 @@ GameObject:
   - component: {fileID: 649112268}
   - component: {fileID: 649112267}
   - component: {fileID: 649112266}
+  - component: {fileID: 649112270}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1380,6 +1381,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &649112270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649112265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82fea07407d6c5741829e679b2845a66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _volumeSlider: {fileID: 1960942349}
+  _volumeText: {fileID: 1192445771}
 --- !u!1 &734152519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1494,6 +1509,7 @@ GameObject:
   - component: {fileID: 744126787}
   - component: {fileID: 744126786}
   - component: {fileID: 744126785}
+  - component: {fileID: 744126789}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1584,6 +1600,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &744126789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744126784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 857524f38feb09043aee8948e9ffaeef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _codeButton: {fileID: 1401137153}
+  _scoreBoard: {fileID: 1025368396}
 --- !u!1 &764014645
 GameObject:
   m_ObjectHideFlags: 0
@@ -2362,7 +2392,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Volume:0
+  m_text: Volume:10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3949,7 +3979,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000019073486, y: 2.4184847}
+  m_AnchoredPosition: {x: 0.0000019073486, y: 5.8862276}
   m_SizeDelta: {x: 0, y: 509.3}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1796521437
