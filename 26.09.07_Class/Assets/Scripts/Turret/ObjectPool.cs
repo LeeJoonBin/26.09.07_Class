@@ -12,6 +12,7 @@ public class ObjectPool : MonoBehaviour
     public bool IsEmpty => Count == 0;
     public void Awake() => Init();
 
+    // Turret이 Pool에서 가져가는 함수
     public IPoolable Take()
     {
         if (IsEmpty) return null;    
@@ -32,6 +33,7 @@ public class ObjectPool : MonoBehaviour
         Count++;
         
     }
+    
     private void Init()
     {
         _pool = new IPoolable[Size];

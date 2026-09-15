@@ -9,6 +9,11 @@ public class PlayerUIController : MonoBehaviour
 { 
     [SerializeField] private TextMeshProUGUI _magazine;
     private PlayerWeapon _weapon;
+    private void Awake() => CacheComponents();
+    private void CacheComponents()
+    {
+        _weapon = GetComponentInChildren<PlayerWeapon>();
+    }
     
     private void Update()
     {
@@ -24,14 +29,11 @@ public class PlayerUIController : MonoBehaviour
     
     private PlayerController _currentHealth;
     
-    private void Awake() => CacheComponents();
-    
     private void CacheComponents()
     {
         _weapon = GetComponentInChildren<PlayerWeapon>();
         _currentHealth = GetComponent<PlayerController>();
     }
-    
 
     public void RefreshHealthUI()
     {

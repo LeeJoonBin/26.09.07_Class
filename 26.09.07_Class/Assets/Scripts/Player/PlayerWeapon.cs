@@ -6,18 +6,21 @@ using UnityEngine;
 public class PlayerWeapon : MonoBehaviour
 {
     private Transform _cameraTransform;
-
+    
+    // 키코드
     [SerializeField] private KeyCode _fireKey = KeyCode.Mouse0;
     [SerializeField] private KeyCode _reloadKey = KeyCode.R;
+    [SerializeField] private KeyCode _throwKey = KeyCode.Alpha3;
+    // 기본 설정
     [SerializeField] private int _maxMagazine;
-    [SerializeField] private FlameEffect _flameEffect;
-    [SerializeField] private FlameEffect _bulletFlameEffectPrefab;
     [SerializeField] private float _cooldown;
     [SerializeField] private int _damage;
     [SerializeField] private float _range;
-    
+    // 프레임 이팩트
+    [SerializeField] private FlameEffect _flameEffect;
+    [SerializeField] private FlameEffect _bulletFlameEffectPrefab;
+
     [Header("Grenade")]
-    [SerializeField] private KeyCode _throwKey = KeyCode.Alpha3;
     [SerializeField] private int _maxGrenade;
     [SerializeField] private float _maxGrenadeThrowForce; //3
     [SerializeField] private Transform _grenadeMuzzlePoint;
@@ -25,10 +28,11 @@ public class PlayerWeapon : MonoBehaviour
     
     public LayerMask TargetLayer;
 
-    private float _currentCooldown;
-    private int _currentMagazine;
     public int CurrentMagazine => _currentMagazine;
     public int MaxMagazine => _maxMagazine;
+
+    private float _currentCooldown;
+    private int _currentMagazine;
     private bool _isUpGrenadeKey => Input.GetKeyDown(_throwKey);
     private bool _isPressedFire => Input.GetKey(_fireKey);
     private bool _isPressedReload => Input.GetKeyDown(_reloadKey);
