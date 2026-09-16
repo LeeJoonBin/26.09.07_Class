@@ -6,12 +6,12 @@ public class FlameEffect : MonoBehaviour
 {
     [SerializeField] private float _deactivateDelay;
     [SerializeField] private bool _isDestroy;
-    [SerializeField] private bool _platInStart;
+    [SerializeField] private bool _playInStart;
     private float _elapsedTime;
 
     // ------------------------------------------
     private void OnEnable() => ResetElapsedTime();
-    private void Start() => gameObject.SetActive(_platInStart);
+    private void Start() => gameObject.SetActive(_playInStart);
     private void Update()
     {
         UpdateElapsedTime();
